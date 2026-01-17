@@ -1,6 +1,8 @@
-package com.gamebox.gamebox.domain.usuario;
+package com.gamebox.gamebox.model;
 
 import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,6 +28,9 @@ public class Usuario {
     @Column(name = "criado_em", nullable = false, updatable = false)
     private LocalDateTime criadoEm;
 
+    @Column(name = "atualizado_em")
+    private LocalDateTime atualizadoEm;
+
     protected Usuario () {}
 
     public Usuario(String nome, String email, String senha, String imagemPerfil) {
@@ -34,29 +39,37 @@ public class Usuario {
         this.senha = senha;
         this.imagemPerfil = imagemPerfil;
         this.criadoEm = LocalDateTime.now();
+        this.atualizadoEm = LocalDateTime.now();
     }
 
     public Long getId() {
         return id;
     }
-
     public String getNome() {
         return nome;
     }
-
     public String getEmail() {
         return email;
     }
-
     public String getSenha() {
         return senha;
     }
-
     public String getImagemPerfil() {
         return imagemPerfil;
     }
-
     public LocalDateTime getCriadoEm() {
         return criadoEm;
+    }
+    public LocalDateTime getAtualizadoEm() { return atualizadoEm; }
+
+    public void atualizarPerfil(String nome, String imagemPerfil) {
+        this.nome = nome;
+        this.imagemPerfil = imagemPerfil;
+        this.atualizadoEm = LocalDateTime.now();
+    }
+
+    public void alterarSenha(String novaSenha) {
+        this.senha = novaSenha;
+        this.atualizadoEm = LocalDateTime.now();
     }
 }

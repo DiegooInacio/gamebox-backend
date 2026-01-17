@@ -1,10 +1,11 @@
-package com.gamebox.gamebox.domain.usuario;
+package com.gamebox.gamebox.repository;
 
+import com.gamebox.gamebox.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface usuarioRepository extends JpaRepository<Usuario, Long> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByEmail(String email);
 
