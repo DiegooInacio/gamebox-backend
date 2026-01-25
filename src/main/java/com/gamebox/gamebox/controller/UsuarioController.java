@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -46,6 +48,16 @@ public class UsuarioController {
         );
 
         return ResponseEntity.ok(new UsuarioResponseDTO(usuario));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UsuarioResponseDTO>> listar() {
+        List<UsuarioResponseDTO> usuarios = usuarioService.listar()
+                .stream()
+                .map(UsuarioResponseDTO::new)
+                .toList();
+
+        return ResponseEntity.ok(usuarios);
     }
 
     @GetMapping("/{id}")

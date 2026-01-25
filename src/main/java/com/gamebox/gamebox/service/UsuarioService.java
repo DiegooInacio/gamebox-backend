@@ -1,8 +1,12 @@
 package com.gamebox.gamebox.service;
 
+import com.gamebox.gamebox.exception.EmailJaCadastrado;
+import com.gamebox.gamebox.exception.RecursoNaoEncontrado;
 import com.gamebox.gamebox.model.Usuario;
 import com.gamebox.gamebox.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UsuarioService {
@@ -16,7 +20,7 @@ public class UsuarioService {
     public Usuario cadastrar(String nome, String email, String senha, String imagemPerfil) {
 
         if (usuarioRepository.existsByEmail(email)) {
-            throw new RuntimeException("Email já cadastrado");
+            throw new EmailJaCadastrado("Email já cadastrado");
         }
 
         Usuario usuario = new Usuario(
@@ -29,9 +33,13 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    public List<Usuario> listar() {
+        return usuarioRepository.findAll();
+    }
+
     public Usuario buscarPorId(Long id) {
         return usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Email já cadastrado"));
+                .orElseThrow(() -> new RecursoNaoEncontrado("Usuário não encontrado"));
     }
 
     public Usuario login(String email, String senha) {
